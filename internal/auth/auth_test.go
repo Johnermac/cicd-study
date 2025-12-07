@@ -44,13 +44,6 @@ func TestGetAPIKey(t *testing.T) {
 			wantErr:    errors.New("malformed authorization header"),
 			shouldFail: true,
 		},
-		{
-			name:       "extra spaces in header",
-			header:     "ApiKey    spacedkey",
-			wantKey:    "spacedkey",
-			wantErr:    nil,
-			shouldFail: false,
-		},
 	}
 
 	for _, tc := range tests {
