@@ -38,7 +38,18 @@ jobs:
       # --- Test gcloud ---
       - name: Use gcloud CLI
         run: gcloud info
-        
-      # --- Deploy to Cloud Run ---
-      - name: Deploy to Cloud Run
+
+      # --- Push to Artifact Registry ---
+      - name: Builds image and pushes it to Artifact Registry
         run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-480603/notely-ar-repo/notely:latest .
+
+      # --- Deploy to Cloud Run ---
+      - name: Deploys to Cloud Run
+        run: |
+          gcloud run deploy notely \
+            --image us-central1-docker.pkg.dev/notely-480603/notely-ar-repo/notely:latest \
+            --region us-central1 \
+            --allow-unauthenticated \
+            --project notely-480603 \
+            --max-instances=4
+            
